@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-    const User = sequelize.define('User',
+    const Company = sequelize.define('Company',
       {
         id: {
           type: DataTypes.INTEGER,
@@ -7,11 +7,23 @@ module.exports = function (sequelize, DataTypes) {
           primaryKey: true,
           allowNull: false
         },
-        name: {
+        commercialAddress: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        email: {
+        fiscalAddress: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        commercialName: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        fiscalName: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        vatNumber: {
           type: DataTypes.STRING,
           allowNull: false
         },
@@ -23,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {
         }
       }, {
         sequelize,
-        tableName: 'users',//esto me dice que está interactuando con la tabla 'users' 
+        tableName: 'companies',//esto me dice que está interactuando con la tabla 'companies' 
         timestamps: true,// esto pone la fecha del momento en que se crea o se modifica un dato
         paranoid: true,//esto me asegura que me muestre los datos de la tabla con delete null
         indexes: [
@@ -39,9 +51,9 @@ module.exports = function (sequelize, DataTypes) {
       }
     )
   
-    User.associate = function (models) {
+    Company.associate = function (models) {
      
     }
   
-    return User //aqui le aclaro si el modelo esta relacionado con otros modelos
+    return Company //aqui le aclaro si el modelo esta relacionado con otros modelos
   }
