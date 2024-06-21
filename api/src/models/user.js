@@ -1,4 +1,4 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoejecuta cuando llamo el archivo y me dice que puede ser llamada (la funcion) por otro archivo
     const User = sequelize.define('User',
       {
         id: {
@@ -44,4 +44,6 @@ module.exports = function (sequelize, DataTypes) {
     }
   
     return User //aqui le aclaro si el modelo esta relacionado con otros modelos
+
   }
+
