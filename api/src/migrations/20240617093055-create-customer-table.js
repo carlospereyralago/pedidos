@@ -14,19 +14,7 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      surname: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      telefono: {
-        type: Sequelize.STRING,//????
-        allowNull: false
-      },
       email: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      gameCategories: {
         type: Sequelize.STRING,
         allowNull: false
       },
