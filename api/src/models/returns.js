@@ -1,34 +1,35 @@
 module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoejecuta cuando llamo el archivo y me dice que puede ser llamada (la funcion) por otro archivo
-    const Product = sequelize.define('Product',
+    const Return = sequelize.define('Return',
       {
         id: {
           type: DataTypes.INTEGER,
-          autoIncrement: true,
           primaryKey: true,
+          autoIncrement: true,
           allowNull: false
         },
-        productCategoryId: {
+        saleId: {
           type: DataTypes.INTEGER,
           allowNull: false
         },
-        name: {
-          type: DataTypes.STRING,
+        customerId: {
+          type: DataTypes.INTEGER,
           allowNull: false
         },
         reference: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        measurementUnit: {
-          type: DataTypes.INTEGER,
+        totalBasePrice: {
+          type: DataTypes.DECIMAL,
+          primaryKey: true,
           allowNull: false
         },
-        measurement: {
-          type: DataTypes.INTEGER,
+        returnDate: {
+          type: DataTypes.DATEONLY,
           allowNull: false
         },
-        visible: {
-          type: DataTypes.BOOLEAN,
+        returnTime: {
+          type: DataTypes.TIME,
           allowNull: false
         },
         createdAt: {
@@ -39,7 +40,7 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
         }
       }, {
         sequelize,
-        tableName: 'products',//esto me dice que está interactuando con la tabla 'products' 
+        tableName: 'returns',//esto me dice que está interactuando con la tabla 'users' 
         timestamps: true,// esto pone la fecha del momento en que se crea o se modifica un dato
         paranoid: true,//esto me asegura que me muestre los datos de la tabla con delete null
         indexes: [
@@ -52,25 +53,30 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
             ]
           },
           {
-            name: 'products_productCategoryId_fk',
+            name: 'returns_saleId_fk',
             using: 'BTREE',
             fields: [
-              { name: 'productCategoryId' }
+              { name: 'SaleId' }
+            ]
+          },
+          {
+            name: 'returns_customerId_fk',
+            using: 'BTREE',
+            fields: [
+              { name: 'customerId' }
             ]
           }
+          
         ]
       }
     )
   
-    Product.associate = function (models) {
-      Product.belongsTo(models.ProductCategories, { as: 'productCategory', foreignKey: 'productCategoryId' })
-      Product.hasMany(models.Price, { as: 'products', foreignKey: 'productId' })
-      Product.hasMany(models.SaleDetail, { as: 'product', foreignKey: 'productId' })
-      Product.hasMany(models.Sale, { as: 'sale', foreignKey: 'saleId' })
-
+    Return.associate = function (models) {
+      Return.belongsTo(models.Sale, { as: 'sale', foreignKey: 'saleId' })   
+      Return.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })   
     }
   
-    return Product //aqui le aclaro si el modelo esta relacionado con otros modelos
+    return Return //aqui le aclaro si el modelo esta relacionado con otros modelos
 
   }
 

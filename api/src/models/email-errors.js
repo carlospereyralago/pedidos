@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoejecuta cuando llamo el archivo y me dice que puede ser llamada (la funcion) por otro archivo
-    const User = sequelize.define('User',
+    const EmailErrors = sequelize.define('EmailErrors',
       {
         id: {
           type: DataTypes.INTEGER,
@@ -7,12 +7,16 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
           primaryKey: true,
           allowNull: false
         },
-        name: {
+        userType: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        email: {
+        emailTemplate: {
           type: DataTypes.STRING,
+          allowNull: false
+        },
+        error: {
+          type: DataTypes.TEXT,
           allowNull: false
         },
         createdAt: {
@@ -23,7 +27,7 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
         }
       }, {
         sequelize,
-        tableName: 'users',//esto me dice que está interactuando con la tabla 'users' 
+        tableName: 'email_errors',//esto me dice que está interactuando con la tabla 'users' 
         timestamps: true,// esto pone la fecha del momento en que se crea o se modifica un dato
         paranoid: true,//esto me asegura que me muestre los datos de la tabla con delete null
         indexes: [
@@ -39,13 +43,11 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
       }
     )
   
-    User.associate = function (models) {
-      User.hasMany(models.UserCredential, { as: 'userCredentials', foreignKey: 'userId' })
-      User.hasMany(models.UserResetPasswordToken, { as: 'userResetPasswordTokens', foreignKey: 'userId' })
-      User.hasMany(models.UserActivationToken, { as: 'userActivationTokens', foreignKey: 'userId' })
+    EmailErrors.associate = function (models) {
+     
     }
   
-    return User //aqui le aclaro si el modelo esta relacionado con otros modelos
+    return EmailErrors //aqui le aclaro si el modelo esta relacionado con otros modelos
 
   }
 

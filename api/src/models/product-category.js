@@ -36,7 +36,7 @@ module.exports = function (sequelize, DataTypes) {
     )
   
     ProductCategories.associate = function (models) {
-     
+      ProductCategories.hasMany(models.Product, { as: 'productCategory', foreignKey: 'productCategoryId' }) 
     }
   
     return ProductCategories //aqui le aclaro si el modelo esta relacionado con otros modelos

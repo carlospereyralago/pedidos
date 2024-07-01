@@ -1,18 +1,26 @@
 module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoejecuta cuando llamo el archivo y me dice que puede ser llamada (la funcion) por otro archivo
-    const User = sequelize.define('User',
+    const UserActivationToken = sequelize.define('UserActivationToken',
       {
         id: {
           type: DataTypes.INTEGER,
-          autoIncrement: true,
           primaryKey: true,
+          autoIncrement: true,
           allowNull: false
         },
-        name: {
+        userId: {
+          type: DataTypes.INTEGER,
+          allowNull: false
+        },
+        userActivationTokens: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        email: {
-          type: DataTypes.STRING,
+        expirationDate: {
+          type: DataTypes.DATE,
+          allowNull: false
+        },
+        used: {
+          type: DataTypes.BOOLEAN,
           allowNull: false
         },
         createdAt: {
@@ -23,7 +31,7 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
         }
       }, {
         sequelize,
-        tableName: 'users',//esto me dice que está interactuando con la tabla 'users' 
+        tableName: 'user_activation_tokens',//esto me dice que está interactuando con la tabla 'users' 
         timestamps: true,// esto pone la fecha del momento en que se crea o se modifica un dato
         paranoid: true,//esto me asegura que me muestre los datos de la tabla con delete null
         indexes: [
@@ -34,18 +42,23 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
             fields: [
               { name: 'id' }
             ]
+          },
+          {
+            name: 'user_activation_tokens_userId_fk',
+            using: 'BTREE',
+            fields: [
+              { name: 'userId' }
+            ]
           }
         ]
       }
     )
   
-    User.associate = function (models) {
-      User.hasMany(models.UserCredential, { as: 'userCredentials', foreignKey: 'userId' })
-      User.hasMany(models.UserResetPasswordToken, { as: 'userResetPasswordTokens', foreignKey: 'userId' })
-      User.hasMany(models.UserActivationToken, { as: 'userActivationTokens', foreignKey: 'userId' })
+    UserActivationToken.associate = function (models) {
+      UserActivationToken.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
     }
   
-    return User //aqui le aclaro si el modelo esta relacionado con otros modelos
+    return UserActivationToken //aqui le aclaro si el modelo esta relacionado con otros modelos
 
   }
 

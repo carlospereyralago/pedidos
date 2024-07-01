@@ -1,34 +1,30 @@
 module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoejecuta cuando llamo el archivo y me dice que puede ser llamada (la funcion) por otro archivo
-    const Product = sequelize.define('Product',
+    const CustomerResetPasswordToken = sequelize.define('CustomerResetPasswordToken',
       {
         id: {
           type: DataTypes.INTEGER,
-          autoIncrement: true,
           primaryKey: true,
+          autoIncrement: true,
           allowNull: false
         },
-        productCategoryId: {
+        customerId: {
           type: DataTypes.INTEGER,
           allowNull: false
         },
-        name: {
+        token: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        reference: {
-          type: DataTypes.STRING,
+        expirationDate: {
+          type: DataTypes.DATE,
           allowNull: false
         },
-        measurementUnit: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        },
-        measurement: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        },
-        visible: {
+        used: {
           type: DataTypes.BOOLEAN,
+          allowNull: false
+        },
+        createdAt: {
+          type: DataTypes.DATE,
           allowNull: false
         },
         createdAt: {
@@ -39,7 +35,7 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
         }
       }, {
         sequelize,
-        tableName: 'products',//esto me dice que está interactuando con la tabla 'products' 
+        tableName: 'customer_reset_password_tokens',//esto me dice que está interactuando con la tabla 'users' 
         timestamps: true,// esto pone la fecha del momento en que se crea o se modifica un dato
         paranoid: true,//esto me asegura que me muestre los datos de la tabla con delete null
         indexes: [
@@ -52,25 +48,21 @@ module.exports = function (sequelize, DataTypes) {//esta funcionalidad se autoej
             ]
           },
           {
-            name: 'products_productCategoryId_fk',
+            name: 'customer_reset_password_tokens_customerId_fk',
             using: 'BTREE',
             fields: [
-              { name: 'productCategoryId' }
+              { name: 'customerId' }
             ]
           }
         ]
       }
     )
   
-    Product.associate = function (models) {
-      Product.belongsTo(models.ProductCategories, { as: 'productCategory', foreignKey: 'productCategoryId' })
-      Product.hasMany(models.Price, { as: 'products', foreignKey: 'productId' })
-      Product.hasMany(models.SaleDetail, { as: 'product', foreignKey: 'productId' })
-      Product.hasMany(models.Sale, { as: 'sale', foreignKey: 'saleId' })
-
+    CustomerResetPasswordToken.associate = function (models) {
+      CustomerResetPasswordToken.belongsTo(models.Customer, { as: 'customer', foreignKey: 'customerId' })
     }
   
-    return Product //aqui le aclaro si el modelo esta relacionado con otros modelos
+    return CustomerResetPasswordToken //aqui le aclaro si el modelo esta relacionado con otros modelos
 
   }
 

@@ -40,7 +40,11 @@ module.exports = function (sequelize, DataTypes) {
     )
   
     Customer.associate = function (models) {
-     
+      Customer.hasMany(models.Sale, { as: 'sales', foreignKey: 'customerId' })
+      Customer.hasMany(models.Return, { as: 'returns', foreignKey: 'customerId' })
+      Customer.hasMany(models.CustomerActivationToken, { as: 'customerActivationToken', foreignKey: 'customerId' })
+      Customer.hasMany(models.CustomerCredential, { as: 'customerCredential', foreignKey: 'customerId' })
+      Customer.hasMany(models.CustomerResetPasswordToken, { as: 'customerResetPasswordToken', foreignKey: 'customerId' })
     }
   
     return Customer //aqui le aclaro si el modelo esta relacionado con otros modelos
