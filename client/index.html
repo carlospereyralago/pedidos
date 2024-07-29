@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Ubuntu&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style/app.css">
+</head>
+<body>
+    <header>
+        <div class="title">
+            <h1>Pedidos</h1>
+        </div>
+        <div class="menu">
+            <svg class="icon-menu" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>menu</title><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
+        </div>
+    </header>
+    <main>
+        <section class="table">
+            <div class="table-header">
+                <div class="table-header-buttons">
+                    <ul>
+                        <li class="filter-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>filter-check</title><path d="M12 12V19.88C12.04 20.18 11.94 20.5 11.71 20.71C11.32 21.1 10.69 21.1 10.3 20.71L8.29 18.7C8.06 18.47 7.96 18.16 8 17.87V12H7.97L2.21 4.62C1.87 4.19 1.95 3.56 2.38 3.22C2.57 3.08 2.78 3 3 3H17C17.22 3 17.43 3.08 17.62 3.22C18.05 3.56 18.13 4.19 17.79 4.62L12.03 12H12M17.75 21L15 18L16.16 16.84L17.75 18.43L21.34 14.84L22.5 16.25L17.75 21" /></svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="table-body">       
+                
+            <div class="table-register">
+                    <div class="table-register-buttons">
+                        <ul>
+                            <li class="edit-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>pencil</title><path d="M19.71,8.04L17.37,10.37L13.62,6.62L15.96,4.29C16.35,3.9 17,3.9 17.37,4.29L19.71,6.63C20.1,7 20.1,7.65 19.71,8.04M3,17.25L13.06,7.18L16.81,10.93L6.75,21H3V17.25M16.62,5.04L15.08,6.58L17.42,8.92L18.96,7.38L16.62,5.04M15.36,11L13,8.64L4,17.66V20H6.34L15.36,11Z" /></svg>
+                            </li>
+                            <li class="delete-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>trash-can-outline</title><path d="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" /></svg>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="table-register-data">
+                        <ul>
+                            <li>Nombre: Carlos</li>
+                            <li>Email: blabla@gmail.com</li>
+                            <li>Fecha de creación: 2024-02-10</li>
+                            <li>Fecha de actualización: 2024-02-10</li>
+                        </ul>                       
+                    </div>
+                </div>
+            </div>
+            <div class="table-footer">
+                <div class="table-info">
+                    <div>
+                        <p>
+                            1 registro en total, mostrando 10 por página
+                        </p>  
+                    </div>                 
+                    <div class="table-info-button">
+                        <button><<</button>  
+                    </div>                 
+                </div>
+                
+            </div>
+        </section>
+        <section class="form">
+            <div class="form-header">
+                <div class="form-tabs">
+                    <ul>
+                        <li>General</li>
+                    </ul>
+                </div>
+                <div class="form-buttons">
+                    <ul>
+                        <li class="clean-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>broom</title><path d="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" /></svg>
+                        </li>
+                        <li class="store-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>content-save</title><path d="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" /></svg>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="form-body">
+                <form>
+                    <div class="form-element">
+                        <div class="form-element-label">
+                            <label for="nombre">Nombre</label>                
+                        </div>
+                        <div class="form-element-input">
+                            <input type="text" name="name">
+                        </div>
+                    </div>
+                    <div class="form-element">
+                        <div class="form-element-label">
+                            <label for="nombre">Email</label>                
+                        </div>
+                        <div class="form-element-input">
+                            <input type="email" name="email">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
