@@ -1,10 +1,23 @@
+import isEqual from 'lodash-es/isEqual'
+import { store } from '../redux/store.js'
+
 class Form extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
+    this.unsubscribe = null
+    this.formElementData = null
   }
 
   connectedCallback () {
+    this.unsubscribe = store.subscribe(() => {
+      const currentState = store.getState()
+
+      if (currentState.crud.formElement && !isEqual(this.formElementData, currentState.crud.formElement.data)) {
+        this.formElementData = currentState.crud.formElement.data
+        this.showElement(this.formElementData)
+      }
+    })
     this.render()
   }
 
@@ -76,9 +89,11 @@ class Form extends HTMLElement {
             }
 
             .form-buttons ul svg{
+                cursor:pointer;
                 fill: hwb(256 1% 66%);
                 height: 1.8rem;
                 width: 1.8rem;
+
             }
 
             form{
@@ -172,6 +187,9 @@ class Form extends HTMLElement {
         console.log.error(error)
       }
     })
+  }
+
+  showElement = async element => {
   }
 }
 
