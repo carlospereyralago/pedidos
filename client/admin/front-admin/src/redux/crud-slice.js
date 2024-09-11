@@ -17,7 +17,7 @@ export const crudSlice = createSlice({
     }
   }
 })
-//esto exporta el reduce
+
 export const {
   showFormElement,
   refreshTable

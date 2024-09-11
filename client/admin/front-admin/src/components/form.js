@@ -1,5 +1,6 @@
 import isEqual from 'lodash-es/isEqual'
 import { store } from '../redux/store.js'
+import { refreshTable } from '../redux/crud-slice.js'
 
 class Form extends HTMLElement {
   constructor () {
@@ -7,6 +8,7 @@ class Form extends HTMLElement {
     this.shadow = this.attachShadow({ mode: 'open' })
     this.unsubscribe = null
     this.formElementData = null
+    this.endpoint = `${import.meta.env.VITE_API_URL}/api/admin/users`
   }
 
   connectedCallback () {
@@ -126,7 +128,7 @@ class Form extends HTMLElement {
                 </div>
                 <div class="form-buttons">
                     <ul>
-                        <li class="clean-button">
+                        <li class="reset-button"> 
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>broom</title><path d="M19.36,2.72L20.78,4.14L15.06,9.85C16.13,11.39 16.28,13.24 15.38,14.44L9.06,8.12C10.26,7.22 12.11,7.37 13.65,8.44L19.36,2.72M5.93,17.57C3.92,15.56 2.69,13.16 2.35,10.92L7.23,8.83L14.67,16.27L12.58,21.15C10.34,20.81 7.94,19.58 5.93,17.57Z" /></svg>
                         </li>
                         <li class="store-button">
@@ -137,6 +139,7 @@ class Form extends HTMLElement {
             </div>
             <div class="form-body">
                 <form>
+                    <input name="id" type="hidden">
                     <div class="form-element">
                         <div class="form-element-label">
                             <label for="nombre">Nombre</label>                
@@ -158,6 +161,15 @@ class Form extends HTMLElement {
         </section>
         `
     this.renderStoreButton()
+    this.renderResetButton()
+  }
+
+  renderResetButton () {
+    this.shadow.querySelector('.reset-button').addEventListener('click', async (event) => {
+      const form = this.shadow.querySelector('form')
+      form.reset()
+      this.shadow.querySelector("[name='id']").value = ''
+    })
   }
 
   renderStoreButton () {
@@ -174,15 +186,21 @@ class Form extends HTMLElement {
         formDataJson[key] = value !== '' ? value : null
       }
 
+      const method = formDataJson.id ? 'PUT' : 'POST'
+      const endpoint = formDataJson.id ? `${this.endpoint}/${formDataJson.id}` : this.endpoint
+
       try {
-        const endpoint = `${import.meta.env.VITE_API_URL}/api/admin/users`
         const response = await fetch(endpoint, {
-          method: 'POST',
+          method,
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(formDataJson)
         })
+
+        store.dispatch(refreshTable(this.endpoint))
+        this.shadow.querySelector("[name='id']").value = ''
+        form.reset()
       } catch (error) {
         console.log.error(error)
       }
@@ -190,6 +208,11 @@ class Form extends HTMLElement {
   }
 
   showElement = async element => {
+    Object.entries(element).forEach(([key, value]) => {
+      if (this.shadow.querySelector(`[name="${key}"]`)) {
+        this.shadow.querySelector(`[name="${key}"]`).value = value
+      }
+    })
   }
 }
 
