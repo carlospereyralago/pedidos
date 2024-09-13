@@ -116,5 +116,3 @@ exports.delete = (req, res) => {
     })
   })
 }
-
-
