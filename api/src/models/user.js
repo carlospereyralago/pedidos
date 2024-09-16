@@ -9,11 +9,31 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
       },
       name: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          }
+        }
       },
       email: {
-        type: DataTypes.STRING,
-        allowNull: false
+        type: DataTypes.STRING(255),
+        allowNull: false,
+        unique: {
+          args: true,
+          msg: 'Ya existe un usuario con ese correo electrónico.'
+        },
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Email".'
+          },
+          isEmail: {
+            msg: 'Por favor, rellena el campo "Email" con un email válido.'
+          }
+        }
       },
       createdAt: {
         type: DataTypes.DATE

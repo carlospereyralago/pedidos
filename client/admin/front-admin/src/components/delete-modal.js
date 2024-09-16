@@ -1,5 +1,5 @@
 import { store } from '../redux/store.js'
-import { refreshTable } from '../redux/crud-slice.js'
+import { refreshTable, showFormElement } from '../redux/crud-slice.js'
 
 class DeleteModal extends HTMLElement {
   constructor () {
@@ -137,6 +137,11 @@ class DeleteModal extends HTMLElement {
       })
 
       store.dispatch(refreshTable(this.endpoint))
+
+      const formElement = {
+        data: null
+      }
+      store.dispatch(showFormElement(formElement))
 
       document.dispatchEvent(new CustomEvent('message', {
         detail: {

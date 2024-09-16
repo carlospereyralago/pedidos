@@ -11,6 +11,10 @@ export const cartSlice = createSlice({
     showFormElement: (state, action) => {
       state.formElement = action.payload
     }
+  },
+  refreshTable: (state, action) => {
+    console.log('Tabla refrescada con endpoint:', action.payload) // Verifica si se actualiza el estado
+    state.tableEndpoint = action.payload
   }
 })
 
