@@ -1,9 +1,9 @@
 const sequelizeDb = require('../../models')
-const Customer = sequelizeDb.Customer
+const Company = sequelizeDb.Company
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = (req, res) => {
-  Customer.create(req.body).then(async data => {
+  Company.create(req.body).then(async data => {
     res.status(200).send(data)
   }).catch(err => {
     if (err.errors) {
@@ -32,9 +32,9 @@ exports.findAll = (req, res) => {
 
   const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
 
-  User.findAndCountAll({
+  Company.findAndCountAll({
     where: condition,
-    attributes: ['id', 'commercialAddress', 'fiscalAddress', 'comercialName', 'fiscalName','vatNumber', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'commercialName', 'vatNumber', 'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
@@ -58,7 +58,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id
 
-  Customer.findByPk(id).then(data => {
+  Company.findByPk(id).then(data => {
     if (data) {
       res.status(200).send(data)
     } else {
@@ -76,7 +76,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id
 
-  Customer.update(req.body, {
+  Company.update(req.body, {
     where: { id }
   }).then(([numberRowsAffected]) => {
     if (numberRowsAffected === 1) {
@@ -98,7 +98,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id
 
-  Customer.destroy({
+  Company.destroy({
     where: { id }
   }).then((numberRowsAffected) => {
     if (numberRowsAffected === 1) {
@@ -116,5 +116,3 @@ exports.delete = (req, res) => {
     })
   })
 }
-
-

@@ -1,4 +1,4 @@
-//estas lineas siempre tienes qe estar---------------------------
+// estas lineas siempre tienes qe estar---------------------------
 
 const express = require('express')
 const app = express()
@@ -13,8 +13,7 @@ fs.readdirSync('./src/routes/').forEach(file => {
 })
 
 app.listen(8080, () => {
-  console.log(`El servidor está corriendo en el puerto 8080.`)
+  console.log('El servidor está corriendo en el puerto 8080.')
 })
 
-//---------------------------------------------------------------
-
+// ---------------------------------------------------------------

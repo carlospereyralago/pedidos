@@ -1,8 +1,8 @@
 import isEqual from 'lodash-es/isEqual'
-import { store } from '../redux/store.js'
-import { refreshTable } from '../redux/crud-slice.js'
+import { store } from '../../redux/store.js'
+import { refreshTable } from '../../redux/crud-slice.js'
 
-class Form extends HTMLElement {
+class UsersForm extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -77,11 +77,17 @@ class Form extends HTMLElement {
                 display: flex;
             }
 
+    
             .form-tabs ul li{
-                background-color: hsl(272, 40%, 35%);
+                color:  hwb(256 1% 66%);
                 cursor: pointer;
                 height: 2rem;
                 padding: 0.3rem;
+            }
+
+            .form-tabs ul li.active{
+              background-color: hsl(272, 40%, 35%);
+              color: white;
             }
 
             .form-buttons{
@@ -103,7 +109,11 @@ class Form extends HTMLElement {
 
             }
 
-            form{
+            .tab-content{
+              display: none;
+            }
+
+            .tab-content.active{
                 display: grid;
                 gap: 2rem;
                 grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -148,12 +158,12 @@ class Form extends HTMLElement {
               font-weight: 600;
             }
         </style>
-
         <section class="form">
+            
             <div class="form-header">
                 <div class="form-tabs">
                     <ul>
-                        <li>General</li>
+                        <li class="tab active" data-tab="general">General</li>
                     </ul>
                 </div>
                 <div class="form-buttons">
@@ -171,30 +181,48 @@ class Form extends HTMLElement {
               <div class="validation-errors">
                 <ul></ul>
               </div>
-                <form>
-                    <input name="id" type="hidden">
-                    <div class="form-element">
-                        <div class="form-element-label">
-                            <label for="nombre">Nombre</label>                
-                        </div>
-                        <div class="form-element-input">
-                            <input type="text" name="name">
-                        </div>
+              <form>
+                <div class="tab-content active" data-tab="general"> 
+                  <input name="id" type="hidden">
+                  <div class="form-element">
+                    <div class="form-element-label">
+                      <label for="nombre">Nombre</label>                
                     </div>
-                    <div class="form-element">
-                        <div class="form-element-label">
-                            <label for="nombre">Email</label>                
-                        </div>
-                        <div class="form-element-input">
-                            <input type="email" name="email">
-                        </div>
+                    <div class="form-element-input">
+                      <input type="text" name="name">
                     </div>
-                </form>
+                  </div>
+                  <div class="form-element">
+                    <div class="form-element-label">
+                      <label for="nombre">Email</label>                
+                    </div>
+                    <div class="form-element-input">
+                      <input type="email" name="email">
+                    </div>
+                  </div>
+                </div>
+              </form>
             </div>
         </section>
         `
     this.renderStoreButton()
     this.renderResetButton()
+    this.renderTabsButton()
+  }
+
+  renderTabsButton () {
+    this.shadow.querySelector('.form').addEventListener('click', async (event) => {
+      if (event.target.closest('.tab')) {
+        const tab = event.target.closest('.tab')
+
+        if (!tab.classList.contains('active')) {
+          this.shadow.querySelector('.tab.active').classList.remove('active')
+          tab.classList.add('active')
+          this.shadow.querySelector('.tab-content.active').classList.remove('active')
+          this.shadow.querySelector(`.tab-content[data-tab="${tab.dataset.tab}"]`).classList.add('active')
+        }
+      }
+    })
   }
 
   renderResetButton () {
@@ -296,4 +324,4 @@ class Form extends HTMLElement {
   }
 }
 
-customElements.define('form-component', Form)
+customElements.define('user-form-component', UsersForm)

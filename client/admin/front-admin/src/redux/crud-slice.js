@@ -14,13 +14,17 @@ export const crudSlice = createSlice({
     },
     refreshTable: (state, action) => {
       state.tableEndpoint = action.payload
+    },
+    applyFilter: (state, action) => {
+      state.queryString = action.payload
     }
   }
 })
 
 export const {
   showFormElement,
-  refreshTable
+  refreshTable,
+  applyFilter
 } = crudSlice.actions
 
 export default crudSlice.reducer

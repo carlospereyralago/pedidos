@@ -7,30 +7,6 @@ module.exports = function (sequelize, DataTypes) {
         primaryKey: true,
         allowNull: false
       },
-      commercialAddress: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          }
-        }
-      },
-      fiscalAddress: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        validate: {
-          notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          },
-          notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
-          }
-        }
-      },
       commercialName: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -44,6 +20,30 @@ module.exports = function (sequelize, DataTypes) {
         }
       },
       fiscalName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          }
+        }
+      },
+      commercialAddress: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          },
+          notEmpty: {
+            msg: 'Por favor, rellena el campo "Nombre".'
+          }
+        }
+      },
+      fiscalAddress: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
