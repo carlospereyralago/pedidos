@@ -29,11 +29,11 @@ module.exports = {
         allowNull: false
       },
       measurementUnit: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false
       },
       measurement: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.DECIMAL,
         allowNull: false
       },
       visible: {

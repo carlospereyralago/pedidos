@@ -1,12 +1,11 @@
 const sequelizeDb = require('../../models')
-const Product = sequelizeDb.Product
+const Faq = sequelizeDb.Faq
 const Op = sequelizeDb.Sequelize.Op
 
 exports.create = (req, res) => {
-  Product.create(req.body).then(async data => {
+  Faq.create(req.body).then(async data => {
     res.status(200).send(data)
   }).catch(err => {
-    console.log(err)
     if (err.errors) {
       res.status(422).send({
         message: err.errors
@@ -33,19 +32,12 @@ exports.findAll = (req, res) => {
 
   const condition = Object.keys(whereStatement).length > 0 ? { [Op.and]: [whereStatement] } : {}
 
-  Product.findAndCountAll({
+  Faq.findAndCountAll({
     where: condition,
-    attributes: ['id', 'productCategoryId', 'name', 'reference', 'measurementUnit', 'measurement', 'visible', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'title', 'description', 'createdAt', 'updatedAt'],
     limit,
     offset,
-    order: [['createdAt', 'DESC']],
-    include: [
-      {
-        model: sequelizeDb.ProductCategory,
-        as: 'productCategory',
-        attributes: ['id', 'name']
-      }
-    ]
+    order: [['createdAt', 'DESC']]
   })
     .then(result => {
       result.meta = {
@@ -57,7 +49,6 @@ exports.findAll = (req, res) => {
 
       res.status(200).send(result)
     }).catch(err => {
-      console.log(err)
       res.status(500).send({
         message: err.errors || 'Algún error ha surgido al recuperar los datos.'
       })
@@ -67,7 +58,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
   const id = req.params.id
 
-  Product.findByPk(id).then(data => {
+  Faq.findByPk(id).then(data => {
     if (data) {
       res.status(200).send(data)
     } else {
@@ -85,7 +76,7 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id
 
-  Product.update(req.body, {
+  Faq.update(req.body, {
     where: { id }
   }).then(([numberRowsAffected]) => {
     if (numberRowsAffected === 1) {
@@ -107,7 +98,7 @@ exports.update = (req, res) => {
 exports.delete = (req, res) => {
   const id = req.params.id
 
-  Product.destroy({
+  Faq.destroy({
     where: { id }
   }).then((numberRowsAffected) => {
     if (numberRowsAffected === 1) {

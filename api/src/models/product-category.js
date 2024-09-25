@@ -1,5 +1,5 @@
 module.exports = function (sequelize, DataTypes) {
-  const ProductCategories = sequelize.define('ProductCategories',
+  const ProductCategory = sequelize.define('ProductCategory',
     {
       id: {
         type: DataTypes.INTEGER,
@@ -12,10 +12,10 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         validate: {
           notNull: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "Nombre de Categoría".'
           },
           notEmpty: {
-            msg: 'Por favor, rellena el campo "Nombre".'
+            msg: 'Por favor, rellena el campo "Nombre de Categoría".'
           }
         }
       },
@@ -43,9 +43,9 @@ module.exports = function (sequelize, DataTypes) {
     }
   )
 
-  ProductCategories.associate = function (models) {
-    ProductCategories.hasMany(models.Product, { as: 'productCategory', foreignKey: 'productCategoryId' })
+  ProductCategory.associate = function (models) {
+    ProductCategory.hasMany(models.Product, { as: 'productCategory', foreignKey: 'productCategoryId' })
   }
 
-  return ProductCategories // aqui le aclaro si el modelo esta relacionado con otros modelos
+  return ProductCategory // aqui le aclaro si el modelo esta relacionado con otros modelos
 }

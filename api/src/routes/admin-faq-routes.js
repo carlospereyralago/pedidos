@@ -1,6 +1,6 @@
 module.exports = (app) => {
   const router = require('express').Router()
-  const controller = require('../controllers/admin/customer-controller.js')
+  const controller = require('../controllers/admin/faq-controller.js')
 
   router.post('/', controller.create)
   router.get('/', controller.findAll)
@@ -8,5 +8,5 @@ module.exports = (app) => {
   router.put('/:id', controller.update)
   router.delete('/:id', controller.delete)
 
-  app.use('/api/admin/customers', router)
+  app.use('/api/admin/faqs', router)
 }
