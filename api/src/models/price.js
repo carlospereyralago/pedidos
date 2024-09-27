@@ -11,7 +11,7 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      bestPrice: {
+      basePrice: {
         type: DataTypes.DECIMAL,
         allowNull: false
       },

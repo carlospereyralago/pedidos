@@ -64,9 +64,9 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
 
   Product.associate = function (models) {
     Product.belongsTo(models.ProductCategory, { as: 'productCategory', foreignKey: 'productCategoryId' })
-    Product.hasMany(models.Price, { as: 'products', foreignKey: 'productId' })
-    Product.hasMany(models.SaleDetail, { as: 'product', foreignKey: 'productId' })
-    Product.hasMany(models.Sale, { as: 'sale', foreignKey: 'saleId' })
+    Product.hasMany(models.Price, { as: 'prices' })
+    Product.hasMany(models.SaleDetail, { as: 'product' })
+    Product.hasMany(models.Sale, { as: 'sale' })
   }
 
   return Product // aqui le aclaro si el modelo esta relacionado con otros modelos

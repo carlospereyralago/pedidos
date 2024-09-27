@@ -2,13 +2,13 @@ import isEqual from 'lodash-es/isEqual'
 import { store } from '../../redux/store.js'
 import { refreshTable } from '../../redux/crud-slice.js'
 
-class ProductsForm extends HTMLElement {
+class ContactsForm extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
     this.unsubscribe = null
     this.formElementData = null
-    this.endpoint = `${import.meta.env.VITE_API_URL}/api/admin/products`
+    this.endpoint = `${import.meta.env.VITE_API_URL}/api/admin/contacts`
   }
 
   connectedCallback () {
@@ -25,7 +25,6 @@ class ProductsForm extends HTMLElement {
         }
       }
     })
-
     this.render()
   }
 
@@ -126,24 +125,30 @@ class ProductsForm extends HTMLElement {
                 gap: 1rem;
             }
 
+            .form-element.full-width{
+              grid-column: 1 / -1; 
+              width: 100%;
+            }
+
             .form-element input{
-                background-color: hsl(225, 63%, 65%);
-                border-bottom: solid 1px #fff;
-                color: hsl(0, 0%, 100%);
-                width:  100%;
-                padding: 0.3rem 0;
-            }
-
-            .form-element input.error{
-              border-bottom: 2px solid red;
-            }
-
-            .form-element select{
               background-color: hsl(225, 63%, 65%);
               border-bottom: solid 1px #fff;
               color: hsl(0, 0%, 100%);
               width:  100%;
               padding: 0.3rem 0;
+            }
+
+            .form-element textarea{
+              background-color: hsl(225, 63%, 65%);
+              border-bottom: solid 1px #fff;
+              color: hsl(0, 0%, 100%);
+              height: 20vh;
+              width:  100%;
+              padding: 0.5rem;
+            }
+
+            .form-element input.error{
+              border-bottom: 2px solid red;
             }
 
             .validation-errors{
@@ -193,15 +198,17 @@ class ProductsForm extends HTMLElement {
               <form>
                 <div class="tab-content active" data-tab="general"> 
                   <input name="id" type="hidden">
+                  <input name="fingerprintId" type="hidden">
+
                   <div class="form-element">
                     <div class="form-element-label">
-                      <label for="categoryId">Categoria</label>                
+                      <label for="fingerprintId">FingerprintId</label>                
                     </div>
                     <div class="form-element-input">
-                      <select name="productCategoryId"></select>
+                      <input type="text" name="fingerprintId">
                     </div>
                   </div>
-
+                  
                   <div class="form-element">
                     <div class="form-element-label">
                       <label for="nombre">Nombre</label>                
@@ -213,79 +220,39 @@ class ProductsForm extends HTMLElement {
 
                   <div class="form-element">
                     <div class="form-element-label">
-                      <label for="precio">Precio</label>                
+                      <label for="nombre">Email</label>                
                     </div>
                     <div class="form-element-input">
-                      <input type="number" name="basePrice">
+                      <input type="email" name="email">
                     </div>
                   </div>
 
-                  <div class="form-element">
+                  <div class="form-element full-width">
                     <div class="form-element-label">
-                      <label for="referencia">Referencia</label>                
+                      <label for="asunto">Asunto</label>                
                     </div>
                     <div class="form-element-input">
-                      <input type="text" name="reference">
+                      <input type="text" name="subject">
                     </div>
                   </div>
 
-                  <div class="form-element">
+                  <div class="form-element full-width">
                     <div class="form-element-label">
-                      <label for="measurementUnit">Unidad de medida</label>                
+                      <label for="Mensaje">Mensaje</label>                
                     </div>
                     <div class="form-element-input">
-                      <select name="measurementUnit">
-                        <option value="gr">gr</option>
-                        <option value="ml">ml</option>
-                        <option value="ud">ud</option>
-                      </select>
+                      <textarea name="message"></textarea>
                     </div>
                   </div>
 
-                  <div class="form-element">
-                    <div class="form-element-label">
-                      <label for="measurement">Medida</label>                
-                    </div>
-                    <div class="form-element-input">
-                      <input type="number" name="measurement">
-                    </div>
-                  </div>
-
-                  <div class="form-element">
-                    <div class="form-element-label">
-                      <label for="categoryId">Visible</label>                
-                    </div>
-                    <div class="form-element-input">
-                      <select name="visible">
-                        <option value="1">Si</option>
-                        <option value="0">No</option>
-                      </select>
-                    </div>
-                  </div>
                 </div>
               </form>
             </div>
         </section>
         `
-
-    this.loadProductCategories()
     this.renderStoreButton()
     this.renderResetButton()
     this.renderTabsButton()
-  }
-
-  async loadProductCategories () {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/product-categories`)
-    this.productCategories = await response.json()
-
-    const select = this.shadow.querySelector('[name="productCategoryId"]')
-
-    this.productCategories.rows.forEach(category => {
-      const option = document.createElement('option')
-      option.value = category.id
-      option.textContent = category.name
-      select.appendChild(option)
-    })
   }
 
   renderTabsButton () {
@@ -394,39 +361,12 @@ class ProductsForm extends HTMLElement {
 
   showElement = async element => {
     this.resetForm()
-
     Object.entries(element).forEach(([key, value]) => {
       if (this.shadow.querySelector(`[name="${key}"]`)) {
-        const formElement = this.shadow.querySelector(`[name="${key}"]`)
-
-        if (formElement.tagName.toLowerCase() === 'input') {
-          if (formElement.type === 'radio') {
-            const radioButton = this.shadow.querySelector(`[name="${key}"][value="${value}"]`)
-
-            if (radioButton) {
-              radioButton.checked = true
-            }
-          } else if (formElement.type === 'checkbox') {
-            formElement.checked = !!value
-          } else {
-            formElement.value = value
-          }
-        }
-
-        if (formElement.tagName.toLowerCase() === 'select') {
-          formElement.querySelectorAll('option').forEach(option => {
-            if (option.value === value) {
-              option.selected = true
-            }
-          })
-        }
-
-        if (formElement.tagName.toLowerCase() === 'textarea') {
-          formElement.value = value
-        }
+        this.shadow.querySelector(`[name="${key}"]`).value = value
       }
     })
   }
 }
 
-customElements.define('products-form-component', ProductsForm)
+customElements.define('contact-form-component', ContactsForm)

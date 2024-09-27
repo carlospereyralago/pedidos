@@ -20,7 +20,7 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'NO ACTION'
       },
-      bestPrice: {
+      basePrice: {
         type: Sequelize.DECIMAL,
         allowNull: false
       },

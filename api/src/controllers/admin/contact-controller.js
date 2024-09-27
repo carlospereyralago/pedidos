@@ -34,7 +34,7 @@ exports.findAll = (req, res) => {
 
   Contact.findAndCountAll({
     where: condition,
-    attributes: ['id', 'fingerprintId', 'name', 'email', 'createdAt', 'updatedAt'],
+    attributes: ['id', 'fingerprintId', 'name', 'email', 'subject', 'message', 'createdAt', 'updatedAt'],
     limit,
     offset,
     order: [['createdAt', 'DESC']]
@@ -116,5 +116,3 @@ exports.delete = (req, res) => {
     })
   })
 }
-
-
