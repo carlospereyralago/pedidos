@@ -323,11 +323,11 @@ class ProductsTable extends HTMLElement {
       console.log(element)
 
       let tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Nombre: ${element.name}`
+      tableRegisterDatasLi.textContent = `Categoria: ${element.productCategory.name}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
       tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Categoria: ${element.productCategory.name}`
+      tableRegisterDatasLi.textContent = `Nombre: ${element.name}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
       tableRegisterDatasLi = document.createElement('li')

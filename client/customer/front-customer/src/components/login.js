@@ -1,4 +1,4 @@
-class Menu extends HTMLElement {
+class Login extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -93,4 +93,4 @@ class Menu extends HTMLElement {
   }
 }
 
-customElements.define('menu-component', Menu)
+customElements.define('login-component', Login)
