@@ -13,13 +13,13 @@ class Main extends HTMLElement {
       /* html */`
         <style>
             *{
-                box-sizing: border-box;
+              box-sizing: border-box;
             }
 
             main{
-                display: grid;
-                gap: 2rem;
-                grid-template-columns: 2fr 4fr;
+              display: flex;
+              flex-direction: column;
+              padding: 1rem;
             }
         </style>
         <main>

@@ -64,6 +64,7 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
 
   Product.associate = function (models) {
     Product.belongsTo(models.ProductCategory, { as: 'productCategory', foreignKey: 'productCategoryId' })
+    Product.hasOne(models.Price, { as: 'price', foreignKey: 'productId', scope: { current: true } })
     Product.hasMany(models.Price, { as: 'prices' })
     Product.hasMany(models.SaleDetail, { as: 'product' })
     Product.hasMany(models.Sale, { as: 'sale' })

@@ -20,6 +20,7 @@ class Title extends HTMLElement {
             h1{
                 color: hsl(0, 0%, 100%);
                 font-family: "Ubuntu", sans-serif;
+                font-size: 1rem;
                 margin: 0;
             }
         </style>

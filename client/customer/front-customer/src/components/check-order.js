@@ -1,4 +1,4 @@
-class Login extends HTMLElement {
+class CheckOrder extends HTMLElement {
   constructor () {
     super()
     this.shadow = this.attachShadow({ mode: 'open' })
@@ -58,7 +58,7 @@ class Login extends HTMLElement {
         width: 100%;
         
       }
-      .button_New_order, .button_prev_order{
+      .button_check_order{
         display: flex;
         gap: 1rem;
         justify-content: center;
@@ -73,24 +73,22 @@ class Login extends HTMLElement {
         color: #551A8B;
         font-weight: 700;
       }
-      .button_New_order:hover, .button_prev_order:hover{
+      .button_check_order:hover{
         background-color: hwb(0deg 70% 25%);
       }
     </style>
       <section>    
         <div class="container">
           <div class="container_button">
-            <button class="button_New_order">Nuevo pedido</button>
+            <button class="button_check_order">Ver pedido</button>
+          </div>         
+          <div class="order-list">
+            
           </div>
-          <div class="container_button">
-            <button class="button_prev_order">Pedidos anteriores</button>
-          </div>
-          
-    
         </div>
       </section>
         `
   }
 }
 
-customElements.define('login-component', Login)
+customElements.define('check-order-component', CheckOrder)
