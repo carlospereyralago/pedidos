@@ -1,3 +1,6 @@
+import { store } from '../redux/store.js'
+import { addToCart } from '../redux/cart-slice.js'
+
 class Order extends HTMLElement {
   constructor () {
     super()
@@ -12,7 +15,6 @@ class Order extends HTMLElement {
   async loadData () {
     const response = await fetch(`${import.meta.env.VITE_API_URL}/api/customer/products`)
     this.data = await response.json()
-    console.log(this.data)
   }
 
   render () {
@@ -150,10 +152,20 @@ class Order extends HTMLElement {
       // Botón de disminuir (-)
       const decreaseButton = document.createElement('button')
       decreaseButton.textContent = '-'
+      decreaseButton.dataset.id = element.id
+
       decreaseButton.addEventListener('click', () => {
         const quantityInput = quantityInputField.value
         if (quantityInput > 0) {
-          quantityInputField.value = parseInt(quantityInput) - 1
+          const quantity = parseInt(quantityInput) - 1
+          quantityInputField.value = quantity
+
+          const data = {
+            ...element,
+            quantity
+          }
+
+          store.dispatch(addToCart(data))
         }
       })
 
@@ -166,9 +178,19 @@ class Order extends HTMLElement {
       // Botón de aumentar (+)
       const increaseButton = document.createElement('button')
       increaseButton.textContent = '+'
+      increaseButton.dataset.id = element.id
+
       increaseButton.addEventListener('click', () => {
         const quantityInput = quantityInputField.value
-        quantityInputField.value = parseInt(quantityInput) + 1
+        const quantity = parseInt(quantityInput) + 1
+        quantityInputField.value = quantity
+
+        const data = {
+          ...element,
+          quantity
+        }
+
+        store.dispatch(addToCart(data))
       })
 
       // Añadir los botones y el input a los controles de cantidad
