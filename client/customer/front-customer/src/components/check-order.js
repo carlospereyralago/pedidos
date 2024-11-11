@@ -41,28 +41,31 @@ class CheckOrder extends HTMLElement {
         justify-content: center;
         margin-top: 30px;
         width: 100%;
-        
       }
-      .button-check-order{
+
+      .button-check-order, .payment-button button{
+        align-items: center;
+        background-color: hwb(0deg 100% 0%);
+        border: 0;
+        border-radius: 10PX;
+        color: #551A8B;
+        font-family: ubuntu;
+        font-size: 1em;
+        font-weight: 700;
         display: flex;
         gap: 1rem;
-        justify-content: center;
-        font-family: ubuntu;
-        WIDTH: 80%;
-        BACKGROUND-COLOR: hwb(0deg 100% 0%);
-        BORDER: 0;
-        BORDER-RADIUS: 10PX;
-        HEIGHT: 30PX;
-        ALIGN-ITEMS: center;
-        font-size: 1em;
-        color: #551A8B;
-        font-weight: 700;
+        justify-content: center;        
+        height: 30PX;
+        width: 80%;        
       }
 
       .button-check-order:hover{
         background-color: hwb(0deg 70% 25%);
       }
-
+      .payment-button{       
+        display: flex;
+        justify-content: center;  
+      }
       .check-order-resume{
         background-color: hwb(256 1% 66%);
         right: -100%;
@@ -98,6 +101,13 @@ class CheckOrder extends HTMLElement {
         width: 1.5rem;
       }
 
+      .check-order-resume-main{
+        display: flex; 
+        flex-direction: column;
+        gap: 2rem;
+        padding: 1rem;
+      }
+
       .check-order-resume .order-list{
         height: 100%;
         width:100%;
@@ -108,8 +118,8 @@ class CheckOrder extends HTMLElement {
         flex-direction: column;
         width: 100%;
         font-family: "Ubuntu", sans-serif;
-        max-height: 80vh;
-        min-height: 80vh;
+        max-height: 70vh;
+        min-height: 70vh;
         overflow-y: auto;
       }
 
@@ -145,6 +155,27 @@ class CheckOrder extends HTMLElement {
       .check-order-resume-data ul.secondUl li.selector {
         padding-bottom: 0.5rem;  
       }
+
+      .total-price{
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .total-price h3{
+        color: hsl(0, 0%, 100%);
+        font-family: "Ubuntu", sans-serif;
+      }
+      .total-price span{
+        color: hsl(0, 0%, 100%);
+        font-family: "Ubuntu", sans-serif;
+      }
+      .taxes span{
+        color: hsl(0, 0%, 100%);
+        font-family: "Ubuntu", sans-serif;
+        padding: 10px 0;
+        display: flex;
+      }
     </style>
     <section class="check-order">    
       <div class="container-button">
@@ -159,8 +190,22 @@ class CheckOrder extends HTMLElement {
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>arrow-left-bold</title><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg>
           </div>
         </div>
-        <div class="check-order-resume-data"></div>   
-        <div class="check-order-finish"></div>   
+        <div class="check-order-resume-main">
+          <div class="check-order-resume-data"></div>
+
+          <div class="check-order-resume-payment">
+            <div class="total-price">
+              <h3>Total</h3>
+              <span></span>
+            </div> 
+            <div class="taxes">
+              <span>Impuestos no incluidos</span>
+            </div>
+            <div class="payment-button">
+              <button>Finalizar pedido</button>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     `
@@ -172,10 +217,27 @@ class CheckOrder extends HTMLElement {
     this.shadow.querySelector('.back-button').addEventListener('click', () => {
       this.shadow.querySelector('.check-order-resume').classList.remove('active')
     })
+    this.shadow.querySelector('.payment-button').addEventListener('click', () => this.completeOrder())
+    this.shadow.querySelector('.payment-button').addEventListener('click', async () => {
+      const data = {
+        products: this.products
+      }
+
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/customer/sales`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+
+      const reference = response.json()
+    })
 
     const checkOrderResumeData = this.shadow.querySelector('.check-order-resume-data')
 
     if (!this.products) {
+      this.shadow.querySelector('.check-order-resume-payment').innerHTML = ''
       const message = document.createElement('h3')
       message.textContent = 'No hay productos en la cesta'
       checkOrderResumeData.appendChild(message)
@@ -198,7 +260,7 @@ class CheckOrder extends HTMLElement {
 
         tableRegisterDatasLi = document.createElement('li')
         const totalPriceProduct = element.quantity * element.price.basePrice
-        tableRegisterDatasLi.textContent = `${totalPriceProduct} €`
+        tableRegisterDatasLi.textContent = `${parseFloat(totalPriceProduct).toFixed(2)} €`
         tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
         const tableRegisterDatasUlSelector = document.createElement('ul')
@@ -215,7 +277,63 @@ class CheckOrder extends HTMLElement {
         tableRegisterDatasLi.textContent = `${element.quantity} x ${element.price.basePrice} €`
         tableRegisterDatasUlSelector.appendChild(tableRegisterDatasLi)
       })
+
+      const totalPriceElement = this.shadow.querySelector('.total-price span')
+
+      const totalPrice = this.products.reduce((acc, element) =>
+        acc + (element.quantity * element.price.basePrice), 0)
+
+      totalPriceElement.textContent = parseFloat(totalPrice).toFixed(2) + ' €'
     }
+  }
+
+  completeOrder () {
+    // Limpia el contenido HTML del shadow DOM
+    this.shadow.innerHTML = /* html */`
+      <style>
+        /* Estilos para la pantalla de confirmación */
+        .confirmation {
+          background-color: hwb(256 1% 66%);
+          color: hsl(0, 0%, 100%);          
+          font-family: Ubuntu, sans-serif;
+          left: 0;
+          height: 100%;
+          padding-top: 10rem;
+          position: fixed;
+          text-align: center;
+          top: 0;          
+          width: 100%;
+        }
+        .back-start-button{
+          display: flex;
+          justify-content: center;
+        }
+        .back-start-button button{
+          align-items: center;
+          background-color: hwb(0deg 100% 0%);
+          border: 0;
+          border-radius: 10PX;
+          color: #551A8B;
+          font-family: ubuntu;
+          font-size: 1em;
+          font-weight: 700;
+          display: flex;
+          gap: 1rem;
+          justify-content: center;        
+          height: 30PX;
+          width: 80%;  
+        }
+      </style>
+      <div class="confirmation">
+        <h3>Pedido realizado con exito</h3>
+        <p>En breve recibirá un correo con los dealles. <br>
+          La referencia de su pedido es <span></span>
+        </p>
+        <div class="back-start-button">
+          <button>Finalizar pedido</button>
+        </div>
+      </div>
+    `
   }
 }
 

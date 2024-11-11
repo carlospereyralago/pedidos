@@ -30,7 +30,7 @@ module.exports = {
       saleDate: {
         type: Sequelize.DATEONLY
       },
-      saletIME: {
+      saleTime: {
         type: Sequelize.TIME
       },
       createdAt: {

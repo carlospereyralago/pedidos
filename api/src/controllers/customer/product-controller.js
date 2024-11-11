@@ -9,7 +9,7 @@ exports.findAll = (req, res) => {
       {
         model: sequelizeDb.Price,
         as: 'price',
-        attributes: ['basePrice']
+        attributes: ['id', 'basePrice']
       }
     ]
   }).then(result => {

@@ -12,7 +12,7 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
         allowNull: false
       },
       basePrice: {
-        type: DataTypes.DECIMAL,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false
       },
       current: {

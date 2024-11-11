@@ -23,7 +23,7 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
       saleDate: {
         type: DataTypes.DATEONLY
       },
-      saletIME: {
+      saleTime: {
         type: DataTypes.TIME
       },
       createdAt: {
