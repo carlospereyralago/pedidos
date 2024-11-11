@@ -82,7 +82,7 @@ class Order extends HTMLElement {
           align-items: center;
         }
 
-        .quantity-controls button {¡
+        .quantity-controls button {
           font-size: 1rem;
           font-family: "Ubuntu", sans-serif;
         }
