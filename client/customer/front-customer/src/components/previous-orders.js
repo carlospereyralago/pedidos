@@ -32,12 +32,13 @@ class PreviousOrders extends HTMLElement {
         }
 
         .previous-orders {
+          border-bottom: 1px solid hsl(0deg 0% 100%);
           display: flex;
           flex-direction: column;
           width: 100%;
           font-family: "Ubuntu", sans-serif;
-          max-height: 20vh;
-          min-height: 20vh;
+          max-height: 10vh;
+          min-height: 10vh;
           overflow-y: auto;¡
         }
 
@@ -98,7 +99,7 @@ class PreviousOrders extends HTMLElement {
               <button class="previuos-orders-form-button">Buscar por Fecha</button>          
           </div>
         </div>
-        <div class="table-product-order"></div>
+        <div class="table-previous-order"></div>
       </section>
     `
   }

@@ -176,6 +176,38 @@ class CheckOrder extends HTMLElement {
         padding: 10px 0;
         display: flex;
       }
+
+      .confirmation {
+          background-color: hwb(256 1% 66%);
+          color: hsl(0, 0%, 100%);          
+          font-family: Ubuntu, sans-serif;
+          left: 0;
+          height: 100%;
+          padding-top: 10rem;
+          position: fixed;
+          text-align: center;
+          top: 0;          
+          width: 100%;
+        }
+        .back-start-button{
+          display: flex;
+          justify-content: center;
+        }
+        .back-start-button button{
+          align-items: center;
+          background-color: hwb(0deg 100% 0%);
+          border: 0;
+          border-radius: 10PX;
+          color: #551A8B;
+          font-family: ubuntu;
+          font-size: 1em;
+          font-weight: 700;
+          display: flex;
+          gap: 1rem;
+          justify-content: center;        
+          height: 30PX;
+          width: 80%;  
+        }
     </style>
     <section class="check-order">    
       <div class="container-button">
@@ -231,7 +263,9 @@ class CheckOrder extends HTMLElement {
         body: JSON.stringify(data)
       })
 
-      const reference = response.json()
+      const result = await response.json()
+
+      this.completeOrder(result.reference)
     })
 
     const checkOrderResumeData = this.shadow.querySelector('.check-order-resume-data')
@@ -287,53 +321,24 @@ class CheckOrder extends HTMLElement {
     }
   }
 
-  completeOrder () {
-    // Limpia el contenido HTML del shadow DOM
-    this.shadow.innerHTML = /* html */`
-      <style>
-        /* Estilos para la pantalla de confirmación */
-        .confirmation {
-          background-color: hwb(256 1% 66%);
-          color: hsl(0, 0%, 100%);          
-          font-family: Ubuntu, sans-serif;
-          left: 0;
-          height: 100%;
-          padding-top: 10rem;
-          position: fixed;
-          text-align: center;
-          top: 0;          
-          width: 100%;
-        }
-        .back-start-button{
-          display: flex;
-          justify-content: center;
-        }
-        .back-start-button button{
-          align-items: center;
-          background-color: hwb(0deg 100% 0%);
-          border: 0;
-          border-radius: 10PX;
-          color: #551A8B;
-          font-family: ubuntu;
-          font-size: 1em;
-          font-weight: 700;
-          display: flex;
-          gap: 1rem;
-          justify-content: center;        
-          height: 30PX;
-          width: 80%;  
-        }
-      </style>
+  completeOrder (referenceNumber) {
+    const checkOrderContainer = this.shadow.querySelector('.check-order')
+    checkOrderContainer.innerHTML = ''
+
+    checkOrderContainer.innerHTML = /* html */`
       <div class="confirmation">
         <h3>Pedido realizado con exito</h3>
         <p>En breve recibirá un correo con los dealles. <br>
-          La referencia de su pedido es <span></span>
+          La referencia de su pedido es <span class="reference-number"></span>
         </p>
         <div class="back-start-button">
-          <button>Finalizar pedido</button>
+          <button>Volver al Inicio</button>
         </div>
       </div>
     `
+
+    const referenceNumberElement = this.shadow.querySelector('.reference-number')
+    referenceNumberElement.textContent = referenceNumber
   }
 }
 

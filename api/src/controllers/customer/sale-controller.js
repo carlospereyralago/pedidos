@@ -29,10 +29,39 @@ exports.create = async (req, res) => {
 
     await SaleDetail.bulkCreate(saleDetails)
 
-    res.status(200).send(sale.reference)
+    res.status(200).send(data)
   } catch (err) {
+    console.log(err)
     res.status(500).send({
       message: err.errors || 'Algún error ha surgido al finalizar la venta.'
     })
   }
+}
+
+exports.findAll = async (req, res) => {
+  Sale.findAll({
+    attributes: ['id', 'customerId', 'reference', 'totalBasePrice', 'saleDate', 'saleTime'],
+    order: [['id', 'ASC']],
+    include: [
+      {
+        model: sequelizeDb.SaleDetail,
+        as: 'saleDetails',
+        attributes: ['productId', 'productName', 'basePrice', 'quantity'],
+        include: [
+          {
+            model: sequelizeDb.Product,
+            as: 'product',
+            attributes: ['measurementUnit', 'measurement']
+          }
+        ]
+      }
+    ]
+  }).then(result => {
+    res.status(200).send(result)
+  }).catch(err => {
+    console.log(err)
+    res.status(500).send({
+      message: err.errors || 'Algún error ha surgido al recuperar los datos.'
+    })
+  })
 }
