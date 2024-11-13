@@ -91,7 +91,7 @@ class PreviousOrders extends HTMLElement {
       <section class="previous-orders">
         <div class="previuos-orders-form">
           <div class="previuos-orders-form-reference">            
-              <input type="number" value="Referencia del Pedido"> 
+              <input type="number" value=""> 
               <button class="previuos-orders-form-button">Buscar por Referencia</button>            
           </div>
           <div class="previuos-orders-form-date">

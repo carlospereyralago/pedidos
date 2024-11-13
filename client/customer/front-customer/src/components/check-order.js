@@ -336,7 +336,9 @@ class CheckOrder extends HTMLElement {
         </div>
       </div>
     `
-
+    this.shadow.querySelector('.back-start-button').addEventListener('click', () => {
+      window.location.href = 'http://dev-pedidos.com/cliente/nuevo-pedido'
+    })
     const referenceNumberElement = this.shadow.querySelector('.reference-number')
     referenceNumberElement.textContent = referenceNumber
   }
