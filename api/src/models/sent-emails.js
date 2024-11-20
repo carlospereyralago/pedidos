@@ -25,7 +25,7 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
       },
       readeAt: {
         type: DataTypes.DATE,
-        allowNull: false
+        default: null
       },
       uuid: {
         type: DataTypes.STRING,
@@ -63,7 +63,6 @@ module.exports = function (sequelize, DataTypes) { // esta funcionalidad se auto
   )
 
   SentEmail.associate = function (models) {
-    SentEmail.belongsTo(models.User, { as: 'user', foreignKey: 'userId' })
   }
 
   return SentEmail // aqui le aclaro si el modelo esta relacionado con otros modelos

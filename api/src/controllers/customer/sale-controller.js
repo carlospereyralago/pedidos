@@ -1,6 +1,7 @@
 const sequelizeDb = require('../../models')
 const Sale = sequelizeDb.Sale
 const SaleDetail = sequelizeDb.SaleDetail
+const Customer = sequelizeDb.Customer
 
 exports.create = async (req, res) => {
   try {
@@ -28,6 +29,14 @@ exports.create = async (req, res) => {
     }))
 
     await SaleDetail.bulkCreate(saleDetails)
+
+    data.saleDetails = saleDetails
+
+    const customer = await Customer.findByPk(data.customerId)
+    data.id = data.customerId
+    data.email = customer.email
+
+    req.redisClient.publish('new-sale', JSON.stringify(data))
 
     res.status(200).send(data)
   } catch (err) {

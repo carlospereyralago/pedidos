@@ -319,19 +319,19 @@ class SalesTable extends HTMLElement {
       console.log(element)
 
       let tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Cliente: ${element.SalesTable.costumerId}`
+      tableRegisterDatasLi.textContent = `Cliente: ${element.costumerId}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
       tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Referencia: ${element.SalesTable.reference}`
+      tableRegisterDatasLi.textContent = `Referencia: ${element.reference}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
       tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Total Venta: ${element.SalesTable.totalBasePrice}`
+      tableRegisterDatasLi.textContent = `Total Venta: ${element.totalBasePrice}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
 
       tableRegisterDatasLi = document.createElement('li')
-      tableRegisterDatasLi.textContent = `Fecha: ${element.SalesTable.saleDate} + ${element.SalesTable.saleTime}`
+      tableRegisterDatasLi.textContent = `Fecha: ${element.saleDate} + ${element.saleTime}`
       tableRegisterDatasUl.appendChild(tableRegisterDatasLi)
     })
 
