@@ -35,9 +35,10 @@ exports.create = async (req, res) => {
     const customer = await Customer.findByPk(data.customerId)
     data.id = data.customerId
     data.email = customer.email
+    data.customerName = customer.name
 
     req.redisClient.publish('new-sale', JSON.stringify(data))
-
+    console.log(saleDetails)
     res.status(200).send(data)
   } catch (err) {
     console.log(err)
