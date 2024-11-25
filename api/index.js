@@ -2,6 +2,7 @@
 
 const express = require('express')
 const app = express()
+const https = require('https')
 const cors = require('cors')
 const fs = require('fs')
 
@@ -24,6 +25,13 @@ app.use((req, res, next) => {
 
 app.use(cors({ origin: ['localhost:8080'], credentials: true }))
 app.use(express.json({ limit: '10mb', extended: true }))
+
+const key = fs.readFileSync('../certs/key_decrypted.pem')
+const cert = fs.readFileSync('../certs/certificate.pem')
+
+https.createServer({ key, cert }, app).listen(8080, () => {
+  console.log('Servidor HTTPS corriendo en https://localhost:8080')
+})
 
 fs.readdirSync('./src/routes/').forEach(file => {
   require(`./src/routes/${file}`)(app)
