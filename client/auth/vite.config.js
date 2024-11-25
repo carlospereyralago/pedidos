@@ -5,10 +5,10 @@ export default defineConfig({
   base: '/auth', // Ajusta la base según el proyecto
   server: {
     host: 'dev-pedidos.com',
-    port: 5178, // Cambia según el puerto necesario
+    port: 5180, // Cambia según el puerto necesario
     https: {
-      key: fs.readFileSync('../../../certs/key_decrypted.pem'),
-      cert: fs.readFileSync('../../../certs/certificate.pem')
+      key: fs.readFileSync('../../certs/key_decrypted.pem'),
+      cert: fs.readFileSync('../../certs/certificate.pem')
     }
   },
   build: {

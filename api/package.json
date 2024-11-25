@@ -13,7 +13,8 @@
     "ioredis": "^5.4.1",
     "mysql2": "^3.10.1",
     "nodemailer": "^6.9.16",
-    "sequelize": "^6.37.3"
+    "sequelize": "^6.37.3",
+    "stripe": "^17.3.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.3",

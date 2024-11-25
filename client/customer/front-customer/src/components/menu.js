@@ -91,10 +91,10 @@ class Menu extends HTMLElement {
       </section>
         `
     this.shadow.querySelector('.button_New_order').addEventListener('click', () => {
-      window.location.href = 'http://dev-pedidos.com/cliente/nuevo-pedido'
+      window.location.href = 'https://dev-pedidos.com/cliente/nuevo-pedido'
     })
     this.shadow.querySelector('.button_prev_order').addEventListener('click', () => {
-      window.location.href = 'http://dev-pedidos.com/cliente/pedidos-anteriores'
+      window.location.href = 'https://dev-pedidos.com/cliente/pedidos-anteriores'
     })
   }
 }

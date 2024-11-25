@@ -4,5 +4,5 @@ module.exports = (app) => {
 
   router.get('/', controller.findAll)
 
-  app.use('/api/customer/products', router)
+  app.use('/api/client/products', router)
 }
